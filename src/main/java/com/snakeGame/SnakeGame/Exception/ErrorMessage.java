@@ -1,21 +1,17 @@
 package com.snakeGame.SnakeGame.Exception;
 
-import org.springframework.http.HttpStatus;
-
-public class ErrorMessage extends RuntimeException {
+public class ErrorMessage{
 
     private String message;
-    private final HttpStatus httpStatus;
     private String detail;
     private String code;
     private String path;
 
-    public ErrorMessage(String message, String detail, String code, String path, HttpStatus httpStatus) {
+    public ErrorMessage(String message, String detail, String code, String path) {
         this.message = message;
         this.detail = detail;
         this.code = code;
         this.path = path;
-        this.httpStatus = httpStatus;
     }
 
     public String getMessage() {
@@ -34,7 +30,4 @@ public class ErrorMessage extends RuntimeException {
         return path;
     }
 
-    public HttpStatus getHttpStatus() {
-        return httpStatus;
-    }
 }
