@@ -21,8 +21,9 @@ public class Player {
     public String name;
 
     @Column(name = "score", columnDefinition = "INTEGER")
-    public String score;
+    public Integer score;
 
+    @Transient
     @Column(name = "position", columnDefinition = "INTEGER")
-    public String position;
+    public Integer position;
 }
