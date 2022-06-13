@@ -4,6 +4,7 @@ import com.snakeGame.SnakeGame.Exception.PlayerNotFound;
 import com.snakeGame.SnakeGame.Model.Domain.PlayerDTO;
 import com.snakeGame.SnakeGame.Model.Mappers.PlayerMapper;
 import com.snakeGame.SnakeGame.Model.Repositories.PlayerRepository;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,6 +15,7 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
     private final PlayerMapper playerMapper;
+    private Integer position = 1;
 
     public PlayerService(PlayerRepository playerRepository, PlayerMapper playerMapper) {
         this.playerRepository = playerRepository;
@@ -40,4 +42,17 @@ public class PlayerService {
             throw new PlayerNotFound("No se encontro el jugador con ese ID");
         }
     }
+
+    public List<PlayerDTO> getTopPlayers() {
+        List<PlayerDTO> playerList = playerRepository.findTopScores(PageRequest.of(0, 3))
+                .stream()
+                .map(playerMapper::entityToDto)
+                .collect(Collectors.toList());
+        position = 1;
+        playerList.stream().forEach(ent -> {
+            ent.setPosition(position++);
+        });
+        return playerList;
+    }
+
 }

@@ -34,6 +34,13 @@ public class PlayerController {
         );
     }
 
+    @GetMapping(value = "/top")
+    public ResponseEntity<List<PlayerDTO>> findTopScores() {
+        return ResponseEntity.ok(
+                playerService.getTopPlayers()
+        );
+    }
+
     @PostMapping
     public Map<String, String> save(@RequestBody @NotNull PlayerDTO dto){
         PlayerDTO playerDTO = playerService.savePlayer(dto);
