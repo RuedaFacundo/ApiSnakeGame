@@ -1,6 +1,7 @@
 package com.snakeGame.SnakeGame.Services;
 
 import com.snakeGame.SnakeGame.Exception.PlayerNotFound;
+import com.snakeGame.SnakeGame.Model.Domain.PlayerResponseDTO;
 import com.snakeGame.SnakeGame.Model.Domain.PlayerDTO;
 import com.snakeGame.SnakeGame.Model.Mappers.PlayerMapper;
 import com.snakeGame.SnakeGame.Model.Repositories.PlayerRepository;
@@ -22,19 +23,19 @@ public class PlayerService {
         this.playerMapper = playerMapper;
     }
 
-    public List<PlayerDTO> findAll() {
+    public List<PlayerResponseDTO> findAll() {
         return playerRepository.findAll().stream()
                 .map(playerMapper::entityToDto)
                 .collect(Collectors.toList());
     }
 
-    public PlayerDTO savePlayer(PlayerDTO dto) {
+    public PlayerResponseDTO savePlayer(PlayerDTO dto) {
         return playerMapper.entityToDto(
                 playerRepository.save(
                         playerMapper.dtoToEntity(dto)));
     }
 
-    public PlayerDTO getById(int id) {
+    public PlayerResponseDTO getById(int id) {
         if (playerRepository.existsById(id)) {
             return playerMapper.entityToDto(
                     playerRepository.getById(Integer.valueOf(id)));
@@ -43,8 +44,8 @@ public class PlayerService {
         }
     }
 
-    public List<PlayerDTO> getTopPlayers() {
-        List<PlayerDTO> playerList = playerRepository.findTopScores(PageRequest.of(0, 3))
+    public List<PlayerResponseDTO> getTopPlayers() {
+        List<PlayerResponseDTO> playerList = playerRepository.findTopScores(PageRequest.of(0, 3))
                 .stream()
                 .map(playerMapper::entityToDto)
                 .collect(Collectors.toList());
