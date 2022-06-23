@@ -18,6 +18,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/player")
 @Api(tags = "player")
+@CrossOrigin(origins = "https://serpiente-juego.web.app")
 public class PlayerController {
 
     private final PlayerService playerService;
@@ -30,6 +31,7 @@ public class PlayerController {
     @ApiOperation(value = "Get All players")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 401, message = "Unauthorized access"),
             @ApiResponse(code = 403, message = "Access denied")})
     public ResponseEntity<List<PlayerResponseDTO>> findAll() {
         return ResponseEntity.ok(
@@ -41,6 +43,7 @@ public class PlayerController {
     @ApiOperation(value = "Get Player by Id")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 401, message = "Unauthorized access"),
             @ApiResponse(code = 403, message = "Access denied")})
     public ResponseEntity<PlayerResponseDTO> getById(@PathVariable(name = "id") int id){
         return ResponseEntity.ok(
@@ -52,6 +55,7 @@ public class PlayerController {
     @ApiOperation(value = "Get top players")
     @ApiResponses(value = {
             @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 401, message = "Unauthorized access"),
             @ApiResponse(code = 403, message = "Access denied")})
     public ResponseEntity<List<PlayerResponseDTO>> findTopScores() {
         return ResponseEntity.ok(
@@ -65,6 +69,7 @@ public class PlayerController {
             @ApiResponse(code = 200, message = "Player saved successfully",
                     response = String.class),
             @ApiResponse(code = 400, message = "Something went wrong"),
+            @ApiResponse(code = 401, message = "Unauthorized access"),
             @ApiResponse(code = 403, message = "Access denied")})
     public Map<String, String> save(@RequestBody @NotNull PlayerDTO dto){
         PlayerResponseDTO playerResponseDTO = playerService.savePlayer(dto);
